@@ -17,8 +17,17 @@
             --font-size: 16px;
             --arabic-font-size: 20px;
             --transition: all 0.3s ease;
-            --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --shadow-color-rgb: 0, 0, 0;
+            --box-shadow: 0 10px 30px rgba(var(--shadow-color-rgb), 0.1);
             --border-radius: 12px;
+            /* New Theme Variables */
+            --bg-gradient: linear-gradient(135deg, #f9f9f9 0%, #e6f5f5 100%);
+            --card-bg: white;
+            --footer-bg: var(--dark-color);
+            --muted-text-color: #666;
+            --slider-bg: #ccc;
+            --border-color: #ccc;
+            --hover-bg-rgb: 0, 0, 0;
             /* Calendar Colors */
             --color-sunnah: #4CAF50; /* Hijau */
             --color-wajib: #F44336; /* Merah */
@@ -27,13 +36,22 @@
             --color-today: #a0d6f5; /* Biru Muda untuk hari ini */
         }
         body.dark-mode {
-             --primary-color: #1a936f;
-             --secondary-color: #2a9d8f;
-             --accent-color: #2c3e50;
-             --dark-color: #e9c46a;
-             --light-color: #1a1a1a;
-             --text-color: #f0f0f0;
-             --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            --primary-color: #2ecc71;
+            --secondary-color: #27ae60;
+            --accent-color: #3d405b;
+            --dark-color: #ecf0f1;
+            --light-color: #2c3e50;
+            --text-color: #bdc3c7;
+            --gold-color: #f1c40f;
+            --bg-gradient: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            --card-bg: #34495e;
+            --footer-bg: #2c3e50;
+            --muted-text-color: #95a5a6;
+            --slider-bg: #555;
+            --border-color: #555;
+            --hover-bg-rgb: 255, 255, 255;
+            --shadow-color-rgb: 100, 100, 100;
+            --box-shadow: 0 10px 30px rgba(var(--shadow-color-rgb), 0.05);
         }
         * {
             margin: 0;
@@ -42,52 +60,12 @@
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f9f9f9 0%, #e6f5f5 100%);
+            background: var(--bg-gradient);
             color: var(--text-color);
             line-height: 1.7;
             padding-bottom: 60px;
             transition: var(--transition);
             font-size: var(--font-size);
-        }
-        body.dark-mode {
-             background: linear-gradient(135deg, #121212 0%, #282828 100%);
-        }
-        body.dark-mode .step-card,
-        body.dark-mode .settings-menu,
-        body.dark-mode .prayer-times-container,
-        body.dark-mode .calendar-container,
-        body.dark-mode .popup-content,
-        body.dark-mode .calendar-day-header {
-            background: #2a2a2a;
-            border: 1px solid #444;
-        }
-        body.dark-mode .hero {
-             background: rgba(0, 0, 0, 0.2);
-        }
-        body.dark-mode .hero h2,
-        body.dark-mode .step-card h3,
-        body.dark-mode .settings-menu h3,
-        body.dark-mode #jadwal-page .location-display,
-        body.dark-mode #jadwal-page #countdown,
-        body.dark-mode #jadwal-page .prayer-time-item .time,
-        body.dark-mode .calendar-title,
-        body.dark-mode .popup-title {
-            color: var(--text-color);
-        }
-        body.dark-mode .translation,
-        body.dark-mode .description {
-            color: #aaa;
-        }
-        body.dark-mode .font-size-control button {
-            background: var(--light-color);
-            color: var(--secondary-color);
-            border-color: var(--secondary-color);
-        }
-        body.dark-mode .prayer-times-container.animated-bg {
-            color: var(--text-color);
-        }
-        body.dark-mode .prayer-times-container.animated-bg #nextPrayerName {
-            color: white;
         }
         .container {
             max-width: 1200px;
@@ -102,10 +80,10 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            transition: top 0.3s ease-in-out;
+            transition: transform 0.3s ease-in-out; /* Animasi untuk hide/show */
         }
-        header.header-hidden {
-            top: -150px;
+        .header-hidden {
+            transform: translateY(-100%); /* Kelas untuk menyembunyikan header */
         }
         .header-content {
             display: flex;
@@ -120,10 +98,10 @@
         }
         .logo i {
             color: var(--accent-color);
-            font-size: 1.8rem;
+            font-size: 1.5rem;
         }
         .logo h1 {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
         }
         .nav-container {
             display: flex;
@@ -140,7 +118,7 @@
             cursor: pointer;
             transition: var(--transition);
             font-weight: 500;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         .nav-btn:hover,
         .nav-btn.active {
@@ -154,10 +132,10 @@
             background: rgba(255, 255, 255, 0.2);
             border: none;
             color: white;
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             cursor: pointer;
             transition: var(--transition);
             display: flex;
@@ -185,7 +163,7 @@
             display: flex;
         }
         .settings-menu {
-            background: white;
+            background: var(--card-bg);
             border-radius: var(--border-radius);
             padding: 20px;
             width: 90%;
@@ -222,7 +200,7 @@
         }
         .description {
             font-size: 0.9rem;
-            color: #666;
+            color: var(--muted-text-color);
             margin-bottom: 12px;
         }
         .font-size-control {
@@ -236,7 +214,7 @@
             height: 40px;
             border-radius: 50%;
             border: 1px solid var(--primary-color);
-            background: white;
+            background: var(--card-bg);
             color: var(--primary-color);
             font-weight: bold;
             cursor: pointer;
@@ -270,7 +248,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #ccc;
+            background-color: var(--slider-bg);
             transition: var(--transition);
             border-radius: 34px;
         }
@@ -301,7 +279,7 @@
         .hero {
             text-align: center;
             padding: 40px 20px;
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(var(--hover-bg-rgb), 0.05);
             border-radius: var(--border-radius);
             margin-bottom: 30px;
             box-shadow: var(--box-shadow);
@@ -324,7 +302,7 @@
             margin-bottom: 30px;
         }
         .step-card {
-            background: white;
+            background: var(--card-bg);
             border-radius: var(--border-radius);
             padding: 20px;
             box-shadow: var(--box-shadow);
@@ -382,11 +360,12 @@
             font-size: var(--font-size);
             font-style: italic;
             margin: 8px 0;
+            color: var(--text-color);
         }
         .translation {
             margin: 12px 0;
             font-style: italic;
-            color: #666;
+            color: var(--muted-text-color);
             font-size: 0.95rem;
         }
         .close-details {
@@ -408,7 +387,7 @@
         }
         /* Jadwal Sholat Styles (Revisi) */
         #jadwal-page .prayer-times-container {
-            background: white;
+            background: var(--card-bg);
             border-radius: var(--border-radius);
             padding: 25px;
             box-shadow: var(--box-shadow);
@@ -425,9 +404,11 @@
         #jadwal-page #cityInput {
             padding: 10px;
             border-radius: 20px;
-            border: 1px solid #ccc;
+            border: 1px solid var(--border-color);
             font-size: 1rem;
             width: 250px;
+            background-color: var(--card-bg);
+            color: var(--text-color);
         }
         #jadwal-page #searchBtn {
             padding: 10px 20px;
@@ -521,7 +502,7 @@
         footer {
             text-align: center;
             padding: 20px 0;
-            background: var(--dark-color);
+            background: var(--footer-bg);
             color: white;
             margin-top: 40px;
         }
@@ -555,7 +536,7 @@
 
         /* Calendar Styles */
         .calendar-container {
-            background: white;
+            background: var(--card-bg);
             border-radius: var(--border-radius);
             padding: 20px;
             box-shadow: var(--box-shadow);
@@ -618,10 +599,10 @@
             border: 2px solid transparent;
         }
         .calendar-date:hover {
-            background-color: rgba(0, 0, 0, 0.05);
+            background-color: rgba(var(--hover-bg-rgb), 0.05);
         }
         .calendar-date.other-month {
-            color: #ccc;
+            color: var(--slider-bg);
             cursor: default;
         }
         .calendar-date.today {
@@ -666,7 +647,7 @@
             display: flex;
         }
         .popup-content {
-            background: white;
+            background: var(--card-bg);
             border-radius: var(--border-radius);
             padding: 20px;
             width: 90%;
@@ -781,10 +762,10 @@
                 </label>
             </div>
             <div class="setting-item">
-                <label for="darkModeToggle">Mode Gelap</label>
-                <div class="description">Mengaktifkan tema gelap untuk kenyamanan mata.</div>
+                <label for="themeToggle">Mode Gelap</label>
+                <div class="description">Beralih antara mode terang dan gelap</div>
                 <label class="toggle-switch">
-                    <input type="checkbox" id="darkModeToggle">
+                    <input type="checkbox" id="themeToggle">
                     <span class="toggle-slider"></span>
                 </label>
             </div>
@@ -1534,7 +1515,7 @@
                         <p class="translation"><b>Artinya:</b> Katakanlah, "Aku berlindung kepada Tuhan yang menguasai subuh, dari kejahatan (makhluk yang) Dia ciptakan, dan dari kejahatan malam apabila telah gelap gulita, dan dari kejahatan wanita-wanita tukang sihir yang mengembus pada buhul-buhul, dan dari kejahatan orang yang dengki apabila dia dengki."</p>
                         <hr>
                         <p class="translation"><b>Surat An-Nas</b></p>
-                        <div class="arabic-text">قُلْ أَعُوذُ بِرَبِّ النَّاسِ ﴿١﴾ مَلِكِ النَّاسِ ﴿٢﴾ إِلَٰهِ النَّاسِ ﴿٣﴾ مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ ﴿٤﴾ الَّذِي يُوَسْوِسُ فِي صُdُورِ النَّاسِ ﴿٥﴾ مِنَ الْجِنَّةِ وَالنَّاسِ ﴿٦﴾</div>
+                        <div class="arabic-text">قُلْ أَعُوذُ بِرَبِّ النَّاسِ ﴿١﴾ مَلِكِ النَّاسِ ﴿٢﴾ إِلَٰهِ النَّاسِ ﴿٣﴾ مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ ﴿٤﴾ الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ ﴿٥﴾ مِنَ الْجِنَّةِ وَالنَّاسِ ﴿٦﴾</div>
                         <div class="latin-text">Qul a‘ūdhu birabbin-nās, Malikin-nās, Ilāhin-nās, Min sharril-waswāsil-khannās, Alladhī yuwaswisu fī ṣudūrin-nās, Minal-jinnati wan-nās.</div>
                         <p class="translation"><b>Artinya:</b> Katakanlah, "Aku berlindung kepada Tuhannya manusia, Raja manusia, sembahan manusia, dari kejahatan (bisikan) setan yang bersembunyi, yang membisikkan (kejahatan) ke dalam dada manusia, dari (golongan) jin dan manusia."</p>
                         <hr>
@@ -1814,8 +1795,7 @@
         const decreaseArabicFont = document.getElementById('decreaseArabicFont');
         const arabicFontSizeValue = document.getElementById('arabicFontSizeValue');
         const latinToggle = document.getElementById('latinToggle');
-        const darkModeToggle = document.getElementById('darkModeToggle');
-        const body = document.body;
+        const themeToggle = document.getElementById('themeToggle'); // New theme toggle
         let currentFontSize = 16;
         let currentArabicFontSize = 20;
 
@@ -1829,16 +1809,40 @@
             });
             playSound('click');
         });
-        darkModeToggle.addEventListener('change', () => {
-            if (darkModeToggle.checked) {
-                body.classList.add('dark-mode');
-                localStorage.setItem('theme', 'dark');
+
+        // --- NEW: THEME CONTROL ---
+        themeToggle.addEventListener('change', () => {
+            if (themeToggle.checked) {
+                applyTheme('dark');
             } else {
-                body.classList.remove('dark-mode');
-                localStorage.setItem('theme', 'light');
+                applyTheme('light');
             }
             playSound('click');
         });
+
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                document.body.classList.add('dark-mode');
+                themeToggle.checked = true;
+            } else {
+                document.body.classList.remove('dark-mode');
+                themeToggle.checked = false;
+            }
+            localStorage.setItem('theme', theme);
+        }
+
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                applyTheme(savedTheme);
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                applyTheme('dark');
+            } else {
+                applyTheme('light');
+            }
+        }
+        // --- END NEW ---
+
         function updateFontSize() {
             document.documentElement.style.setProperty('--font-size', currentFontSize + 'px');
             fontSizeValue.textContent = currentFontSize;
@@ -1925,7 +1929,7 @@
         });
         async function getAutoLocation() {
             try {
-                const response = await fetch('http://ip-api.com/json');
+                const response = await fetch('https://ip-api.com/json');
                 const data = await response.json();
                 if (data.status === 'success' && data.city) {
                     getPrayerTimesByCity(data.city);
@@ -2217,6 +2221,7 @@
         }
         
         document.addEventListener('DOMContentLoaded', function() {
+             loadTheme(); // Load theme on start
              if (document.querySelector('.nav-btn[data-page="jadwal"]').classList.contains('active')) {
                 initPrayerTimes();
                 document.getElementById('jadwal-page').setAttribute('data-loaded', 'true');
@@ -2225,30 +2230,25 @@
             if (document.getElementById('kalender-page').classList.contains('active')) {
                 initializeCalendar();
             }
-
-            // Dark Mode Loader
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark') {
-                body.classList.add('dark-mode');
-                darkModeToggle.checked = true;
-            }
         });
 
-        // Auto-hide Header
-        let lastScrollTop = 0;
+        // --- BARU: SEMBUNYIKAN HEADER SAAT SCROLL ---
         const header = document.querySelector('header');
+        let lastScrollTop = 0;
+        
         window.addEventListener('scroll', function() {
             let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            if (scrollTop > lastScrollTop && scrollTop > header.offsetHeight) {
-                // Scroll Down
-                header.classList.add('header-hidden');
+            const headerHeight = header ? header.offsetHeight : 50; 
+
+            if (scrollTop > lastScrollTop && scrollTop > headerHeight){
+              // Scroll ke bawah -> Sembunyikan Header
+              header.classList.add('header-hidden');
             } else {
-                // Scroll Up
-                header.classList.remove('header-hidden');
+              // Scroll ke atas -> Tampilkan Header
+              header.classList.remove('header-hidden');
             }
-            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; 
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
         }, false);
     </script>
 </body>
 </html>
-
